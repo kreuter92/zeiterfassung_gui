@@ -26,7 +26,7 @@ class MainWindow : public QWidget
 
 MainWindow::MainWindow()
 {
-   setMinimumSize(200, 200);
+   setMinimumSize(200, 300);
 
    QLabel *currentLabel = new QLabel("Uhrzeit:");
    currentTime = new QTimeEdit();
@@ -43,6 +43,19 @@ MainWindow::MainWindow()
 
    QPushButton *info_b = new QPushButton();
    info_b->setText("Info");
+
+   QString filename = "homer.png";
+   QLabel* lbl = new QLabel(this);
+   /** set content to show center in label */
+   lbl->setAlignment(Qt::AlignCenter);
+   QPixmap pix;
+
+    /** to check wether load ok */
+    if(pix.load(filename)){
+        /** scale pixmap to fit in label'size and keep ratio of pixmap */
+        //pix = pix.scaled(lbl->size(),Qt::KeepAspectRatio);
+        lbl->setPixmap(pix);
+    }
  
    QGridLayout *grid1 = new QGridLayout();
    grid1->setContentsMargins(75, 45, 75, 25);   
@@ -61,10 +74,15 @@ MainWindow::MainWindow()
    layout1->addStretch();
    layout1->addWidget(pb_1);
    layout1->addStretch();
+
+   QHBoxLayout *layout2 = new QHBoxLayout();
+   layout2->addWidget(lbl);
  
    QVBoxLayout *layoutMain = new QVBoxLayout(this);
+   layoutMain->addLayout(layout2);
+   layoutMain->addSpacing(5);
    layoutMain->addLayout(grid1);
-   layoutMain->addSpacing(25);
+   layoutMain->addSpacing(5);
    layoutMain->addLayout(layout1);
 
    //Einstempeln
